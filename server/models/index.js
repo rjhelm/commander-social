@@ -1,4 +1,17 @@
-const User = require('./User');
-const Post = require('./Post');
+import User from './User';
+import Post from './Post';
+import Like from './Like';
+import Follow from './Follow';
+import Comment from './Comment';
+import Notification from './Notification';
+import Message from './Message';
 
-module.exports = { User, Post };
+export default {
+  User,
+  Post,
+  Like,
+  Follow,
+  Comment,
+  Notification,
+  Message,
+};

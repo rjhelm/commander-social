@@ -1,37 +1,31 @@
-const { Schema, model } = require('mongoose');
-const commentSchema = require('./Comment');
-const dateFormat = require('../utils/dateFormat');
+import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
 
-const postSchema = new Schema(
+const postSchema = Schema(
   {
-    postText: {
-      type: String,
-      required: 'Looking for a game? advice? Text required!',
-      minlength: 1,
-      maxlength: 280
+    title: String,
+    image: String,
+    imagePublicId: String,
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      get: timestamp => dateFormat(timestamp)
-    },
-    username: {
-      type: String,
-      required: true
-    },
-    comments: [commentSchema]
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Like',
+      },
+    ],
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Comment',
+      },
+    ],
   },
   {
-    toJSON: {
-      getters: true
-    }
+    timestamps: true,
   }
 );
 
-postSchema.virtual('commentCount').get(function() {
-  return this.comments.length;
-});
-
-const Post = model('Post', postSchema);
-
-module.exports = Post;
+export default mongoose.model('Post', postSchema);

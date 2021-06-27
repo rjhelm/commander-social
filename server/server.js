@@ -8,9 +8,9 @@ import schema from './schema';
 import resolvers from './resolvers';
 import { createApolloServer } from './utils/apollo-server';
 
+
 // Connect to database
-mongoose
-  .connect(process.env.MONGO_URL, {
+new mongoose.connect(process.env.MONGODB_URL|| "mongodb://localhost:27017/commander-social", {
     useCreateIndex: true,
     useNewUrlParser: true,
     useFindAndModify: false,
@@ -43,3 +43,5 @@ httpServer.listen({ port: PORT }, () => {
   console.log(`server ready at http://localhost:${PORT}${server.graphqlPath}`);
   console.log(`Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`);
 });
+
+
